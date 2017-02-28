@@ -2,14 +2,16 @@ GENIAL : gene set enrichment analysis
 ===================
 
 
-This is a quick description of GENIAL tools. Don't delete me, I'm very helpful! I can be recovered anyway in the **Utils** tab of the <i class="icon-cog"></i> **Settings** dialog.
+This is a quick description of GENIAL tools path organization. Don't delete me, I'm very helpful!
+
+For more details about how GENIAL tools work and how to use it, please go to the documentation folder (doc).
 
 ----------
 
 
 
 
-<i class="icon-file"></i>  Path organisation
+<i class="icon-file"></i>  Path organization
 =================
 
     bin : version specific executables [1]
