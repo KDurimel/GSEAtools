@@ -1,0 +1,8 @@
+PRIORITAIRE:
+
+    -Generation d'un fichier log
+    -Rendre le script R executable
+    
+NON PRIORITAIRE:
+
+    -Interface graphique rapide : https://www.r-bloggers.com/creating-guis-in-r-with-gwidgets/
