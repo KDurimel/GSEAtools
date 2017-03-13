@@ -2,6 +2,7 @@
 
 
 **A lire absoluement**
+
 Cours sur le RNAseq, étape par étape : du design expérimental au workflow d'analyse : http://rnaseq.uoregon.edu/
 
 
