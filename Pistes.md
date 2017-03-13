@@ -1,4 +1,3 @@
-
 **Lire LE RAPPORT DE STAGE**
 
 **Info is beautiful:**
@@ -48,5 +47,5 @@ https://www.r-bloggers.com/making-r-files-executable-under-windows/
 
 **Autres** 
 
- [https://bioinfo-fr.net/soiree-bed-fasta](https://bioinfo-fr.net/soiree-bed-fasta) |
+ [https://bioinfo-fr.net/soiree-bed-fasta](https://bioinfo-fr.net/soiree-bed-fasta)
 
