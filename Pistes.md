@@ -1,5 +1,4 @@
 
-
 **Lire LE RAPPORT DE STAGE**
 
 **Info is beautiful:**
@@ -46,20 +45,8 @@ https://bioinfo-fr.net/tour-dhorizon-des-outils-de-visualisation-des-reseaux-bio
 
 https://www.r-bloggers.com/making-r-files-executable-under-windows/
 
-|   |   |
-| --- | --- |
-|   |
 
-|
-
-|
-
-| **Autres** |
-| --- |
-
-  |
-| --- |
+**Autres** 
 
  [https://bioinfo-fr.net/soiree-bed-fasta](https://bioinfo-fr.net/soiree-bed-fasta) |
-| --- |
 
