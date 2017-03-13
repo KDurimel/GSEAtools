@@ -1,0 +1,21 @@
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+REVUES
+    RNA-seq
+        A survey of best practices for RNA-seq data analysis : 10.1186/s13059-016-0881-8
+        
+    GSEA
+        
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++        
+ARTICLES
+
+
+
+
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+DEJA FOURNIS
+  GSEA
+        Gene set enrichment analysis: A knowledge-based approach for interpreting genome-wide expression profiles : 10.1073/pnas.0506580102
+        Gene set enrichment analysis: performance evaluation and usage guidelines : 10.1093/bib/bbr049
+        Bioinformatics enrichment tools: paths toward the comprehensive functional analysis of large gene lists : 10.1093/nar/gkn923
