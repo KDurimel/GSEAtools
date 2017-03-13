@@ -1,8 +1,12 @@
 PRIORITAIRE:
 
     -Generation d'un fichier log
-    -Rendre le script R executable
+    
+    -Résultats générés en HTML via Shiny + lien DL vers les data.frames à l'origine des représentations graphiques
+    
+    -Intégrer l'esprit BIM (logo, etc, comme "d'habitude")
     
 NON PRIORITAIRE:
 
-    -Interface graphique rapide : https://www.r-bloggers.com/creating-guis-in-r-with-gwidgets/
+    -Interface graphique pour le formulaire (input,params,choix d'une analyse KEGG ou GO ou DOMAINES) : https://www.r-bloggers.com/creating-guis-in-r-with-gwidgets/
+    -Rendre le script R executable
