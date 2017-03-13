@@ -1,6 +1,7 @@
 CONSIGNE:
 
     -Faire l'analyse d'enrichissement en GO-T,KEGG,et DOMAINES. Si possible COMPARER PLUSIEURS RESULTATS obtenus avec des outils différents pour le GO-T, pour le KEGG.
+        (par exemple celui-ci, 100% online : https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4799705/)
 
 PRIORITAIRE:
 
