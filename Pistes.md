@@ -1,6 +1,13 @@
 **Lire LE RAPPORT DE STAGE**
 
-**Info is beautiful:**
+
+**A lire absoluement**
+Cours sur le RNAseq, étape par étape : du design expérimental au workflow d'analyse : http://rnaseq.uoregon.edu/
+
+
+**Representations graphiques (s'inspirer):**
+
+[https://nsaunders.wordpress.com/2017/02/04/nice-graphic-are-they-taking-the-p/](https://nsaunders.wordpress.com/2017/02/04/nice-graphic-are-they-taking-the-p/)
 
  [http://www.informationisbeautiful.net/](http://www.informationisbeautiful.net/)
 
