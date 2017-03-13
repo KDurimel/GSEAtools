@@ -1,3 +1,7 @@
+CONSIGNE:
+
+    -Faire l'analyse d'enrichissement en GO-T,KEGG,et DOMAINES. Si possible COMPARER PLUSIEURS RESULTATS obtenus avec des outils différents pour le GO-T, pour le KEGG.
+
 PRIORITAIRE:
 
     -Generation d'un fichier log
