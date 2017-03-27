@@ -2,6 +2,13 @@ CONSIGNE:
 
     -Faire l'analyse d'enrichissement en GO-T,KEGG,et DOMAINES. Si possible COMPARER PLUSIEURS RESULTATS obtenus avec des outils différents pour le GO-T, pour le KEGG.
         (par exemple celui-ci, 100% online : https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4799705/)
+        
+    -Modules à utiliser:
+        GO enrichment : ClusterProfiler
+        KEGG enrichment : PathView
+        DOMAINES proteiques : Soi même 
+        
+    -Outputs: Tableaux,Barplots,MAplots,Graphes : si possible visualisation DYNAMIQUE.  -->Interfacer avec Shiny
 
 PRIORITAIRE:
 
@@ -16,6 +23,7 @@ PRIORITAIRE:
 NON PRIORITAIRE:
 
     -MA Plot de l'expression differentielle WT vs HEAT
-    -Interface graphique pour le formulaire (input,params,choix d'une analyse KEGG ou GO ou DOMAINES) : https://www.r-bloggers.com/creating-guis-in-r-with-gwidgets/
+    -Interface graphique (GUI) pour le formulaire (input,params,choix d'une analyse KEGG ou GO ou DOMAINES) : https://www.r-bloggers.com/creating-guis-in-r-with-gwidgets/
     -Rendre le script R executable
+    -Utiliser plusieurs modules d'enrichment et comparer leurs outputs.
     
