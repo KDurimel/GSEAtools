@@ -5,6 +5,8 @@ CONSIGNE:
 
 PRIORITAIRE:
 
+    -Génération des résultats pour chaque analyse d'enrichissement (GO,KEGG,domaines PROT)
+
     -Generation d'un fichier log
     
     -Résultats générés en HTML via Shiny + lien DL vers les data.frames à l'origine des représentations graphiques
@@ -13,5 +15,7 @@ PRIORITAIRE:
     
 NON PRIORITAIRE:
 
+    -MA Plot de l'expression differentielle WT vs HEAT
     -Interface graphique pour le formulaire (input,params,choix d'une analyse KEGG ou GO ou DOMAINES) : https://www.r-bloggers.com/creating-guis-in-r-with-gwidgets/
     -Rendre le script R executable
+    
