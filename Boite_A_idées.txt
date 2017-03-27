@@ -1,5 +1,0 @@
-Overview du rendu final :
-    - Une page web faite sur shiny (+html+javascript où je ne sais quoi)
-    -> Un formulaire pour importer le jeu de données et choisir entre analyses KEGG ou GO
-    -> Affichage de la page des résultats graphiques (barplot, etc) + des liens pour télécharger les data_frames R correspondants
-    - Et un logo BIM qui pète sa mère, oui monsieur !
