@@ -173,11 +173,11 @@ server <- function(input, output, session) {
       scale_y_continuous(name="-log10(p_value)",limits=c(0,200))
   })
   
+  ### IDs ####################
   genes <- reactive({as.character(data()$Ensembl_Gene_ID)})
   entrezIDs <- reactive({ bitr(genes(), fromType="ENSEMBL" , toType="ENTREZID", OrgDb="org.Hs.eg.db")$ENTREZID})
   
-  ### GO ########################
-  
+  ### GO #####################
   observe({
     if(input$startgo != 0) {
       # groupgo
@@ -210,8 +210,7 @@ server <- function(input, output, session) {
     }
   })
   
-  ### Pathways ###################
-  
+  ### Pathways ###############
   observe({
     if (input$startkegg != 0) {
       kegg <- reactive({ enrichKEGG(entrezIDs(), pAdjustMethod=input$adjmk, pvalueCutoff=input$keggp, qvalueCutoff=input$keggq)})
@@ -225,8 +224,7 @@ server <- function(input, output, session) {
     }
   })
   
-  ### Protein Domains ############
-  
+  ### Protein Domains ########
   observe({
     if (input$startpd != 0) {
       sprintf("Protein Domains analysis ...")
@@ -278,5 +276,9 @@ server <- function(input, output, session) {
     } # end if input$startpd != 0
   }) # end Protein Domains
 }
+
+##############
+### Launch ###
+##############
 
 shinyApp(ui = ui, server = server)
