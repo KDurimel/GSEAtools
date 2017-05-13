@@ -1,12 +1,11 @@
 Ce qui ne marche pas / qui reste à faire / qui est améliorable :
     - Barres de progression
-    - Protein Domains : 
-        - impossible d'appliquer des filtres ou des tris sur la table de données pour l'isntant (bug javascript)
+    - Protein Domains :
         - Colonnes du tableau pas nommées
         - réfléchir à un output graphique
         - Je ne sais pas si l'output s'actualise pas quand on change les paramètres (problème de reactive values)
-        - Dernière découverte : un truc foire qq part : les p values sont toutes les mêmes (en page 1 en tout ca,s oublié de voir le reste ...)
-            En plus, elles sont supérieurs au taux précisé dans les paramètres d'input...
+        - les p values sont presque toutes les mêmes (en page 1 en tout ca,s oublié de voir le reste ...)
+            En fait je crois que notre jeu de données a déjà filtré les trucs pas significatifs
     - KEGG : ça marche, mais c'est un petit bricolage, qui ne marche que sous windows. 
         Une astuce de Maxime : convertir l'image d'output en plot, et utiliser renderPlot
     
