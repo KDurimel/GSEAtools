@@ -1,5 +1,5 @@
 Ce qui ne marche pas / qui reste à faire / qui est améliorable :
-    - Barres de progression
+    - Barres de progression  : j'en ai une pour Protein Domains. Qui marche à moitié.
     - Protein Domains :
         - réfléchir à un output graphique
         - Je ne sais pas si l'output s'actualise pas quand on change les paramètres (problème de reactive values)
