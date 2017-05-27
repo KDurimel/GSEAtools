@@ -60,6 +60,9 @@ ui <- navbarPage(theme=shinytheme("sandstone"), "Gene Set Enrichment Analysis",
         actionButton("startkegg", "Start")
       ),
       mainPanel(
+        textInput("browskegg", "ID for browser KEGG :", "Please Enter an ID from the table below"),
+        actionButton("startkeggbrows", "Launch browserKEGG"),
+        dataTableOutput("keggtab"),
         uiOutput("pathway1"),
         uiOutput("pathway2"),
         uiOutput("pathway3")
@@ -94,10 +97,10 @@ server <- function(input, output, session) {
   ### Vulcano ################
   output$vulcano <- renderPlot({
     if (is.null(data())) {return(NULL)}
-    ggplot(data(), aes(x=log2FC, y=-log10(adj_pvalue))) +
-      geom_point(size = 1.5, alpha = 0.7, na.rm = T) +
+    ggplot(data(), aes(x=log2FC, y=-log10(adj_pvalue), color=-log10(adj_pvalue) > 4)) +
+      geom_point(size = 1.5, alpha = 1, na.rm = T) +
       scale_x_continuous(name="log2FC") +
-      scale_y_continuous(name="-log10(p_value)",limits=c(0,200))
+      scale_y_continuous(name="-log10(adj_pvalue)",limits=c(0,200))
   })
   
   ### IDs ####################
@@ -118,7 +121,7 @@ server <- function(input, output, session) {
         gogroup <- reactive({ 
           groupGO(entrezIDs(), OrgDb='org.Hs.eg.db', ont=input$goont, level=input$golvl , readable = TRUE) 
         })
-        output$groupGo <- renderDataTable(as.data.frame(gogroup()), options=list(pageLength=10))
+        output$groupGo <- renderDataTable(as.data.frame(gogroup()), options=list(pageLength=10), caption="Go classification :")
       }
       
       # enrichGo
@@ -154,13 +157,16 @@ server <- function(input, output, session) {
     if (input$startkegg != 0) {
       print("Pathway analysis Started ...")
       kegg <- reactive({ enrichKEGG(entrezIDs(), pAdjustMethod=input$adjmk, pvalueCutoff=input$keggp, qvalueCutoff=input$keggq) })
-      pathview(gene.data=genes(), pathway.id=as.matrix(as.data.frame(kegg())[1])[1:3],species = "hsa", limit=c(1,3))
-      
-      shell("copy *.png www")
-      
-      output$pathway1 <- renderUI({ tags$img(src="hsa04060.pathview.png", width="400px", height="247px") })
-      output$pathway2 <- renderUI({ tags$img(src="hsa04064.pathview.png", width="400px", height="318px") })
-      output$pathway3 <- renderUI({ tags$img(src="hsa04668.pathview.png", width="400px", height="273px") })
+      output$keggtab <- renderDataTable({ as.matrix(as.data.frame(kegg())) })
+      #browseKEGG(keggs, as.matrix(as.data.frame(kegg())[1])[1])
+      if (input$startkeggbrows != 0) {
+        browseKEGG(keggs, input$browskegg)
+      }
+      #pathview(gene.data=genes(), pathway.id=as.matrix(as.data.frame(kegg())[1])[1:3],species = "hsa", limit=c(1,3))
+      #shell("copy *.png www")
+      #output$pathway1 <- renderUI({ tags$img(src="hsa04060.pathview.png", width="400px", height="247px") })
+      #output$pathway2 <- renderUI({ tags$img(src="hsa04064.pathview.png", width="400px", height="318px") })
+      #output$pathway3 <- renderUI({ tags$img(src="hsa04668.pathview.png", width="400px", height="273px") })
     }
   })
   
