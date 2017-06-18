@@ -3,7 +3,7 @@
 # library(rChoiceDialogs)
 # wd=file.choose()
 # wd=gsub("\\", "/", wd, fixed = TRUE)
-# wd=gsub("Ã©", "é", wd, fixed = TRUE)
+# wd=gsub("Ã©", "", wd, fixed = TRUE)
 # wd=gsub("GENIAL-Noshiny310317.R", "", wd, fixed = TRUE)
 # setwd(wd)
 #Set Working directory to source file location  
@@ -71,8 +71,8 @@ Log2FC_column = 3 # Colonne du log2FC dans fichier d'entree
 Log2FC_cutoff = 2 # Cutoff du log2FC
 RnaPvalue_column = 5 # Colonne p-valeur ajustee
 Qvalue_cutoff = 0.05 # Qvalue max pour ajustement p-valeur enrichissement GO
-#RnaPvalue_cutoff = 0.05 # Cutoff p-valeur ajustee : #maj : pas besoin car fichier deja filtré
-IdsType="ENSEMBL" #Type d'identifiants du fichier d'entrée (prendre dans COLONNE deroulante shiny)
+#RnaPvalue_cutoff = 0.05 # Cutoff p-valeur ajustee : #maj : pas besoin car fichier deja filtr
+IdsType="ENSEMBL" #Type d'identifiants du fichier d'entre (prendre dans COLONNE deroulante shiny)
 MinGOlevel=7 #Niveau minimal a garder dans l'enrichissement GO
 MaxGOlevel=14 #Niveau maximal a garder dans l'enrichissement GO
 TopKEGG = 3 # Nombre de Pathways max a plotter : default = 3
@@ -454,7 +454,7 @@ setWinProgressBar(pb,95,
   
   
   MFdescriptions <- as.matrix(summary(MFenrichDrop)[2])
-  ##convertir pvalues en coeffs exploitable : avec log(1/pvalue) : plus p-val faible (significatif), plus coeff sera élevé
+  ##convertir pvalues en coeffs exploitable : avec log(1/pvalue) : plus p-val faible (significatif), plus coeff sera lev
   MFcoeffs <- as.matrix(summary(MFenrichDrop)[5]) #p-value contenu dans colonne[5]
   MFcoeffs <- log(1/MFcoeffs) #convertir p-value en coefficient exploitable dans highcharts
   
@@ -478,7 +478,7 @@ setWinProgressBar(pb,95,
 pb<-winProgressBar(title="Step 6/7 -  KEGG enrichment", label="0% done \t Loading required libraries", min=0, max=100, initial=0)
 getWinProgressBar(pb)
   
-library(pathview) #Pour dessiner les pathways sur-représentés
+library(pathview) #Pour dessiner les pathways sur-reprsents
   
 library(MASS) #Contient methode write.matrix pour ecrire variables qui sont au format matix ou data.frame sans parser..
 
@@ -511,8 +511,8 @@ getWinProgressBar(pb)
 library(biomaRt)
 
 ##INFO : test stat sur les familles proteiques, ensuite recoupement de l'information (ids retrieving)
-#permet de retrouver les domaines protéiques reliés à ces familles . (qui ne sont donc eux pas tous sur
-#représentés d'office car 1 id famille = plusieurs ids domaines)
+#permet de retrouver les domaines protiques relis  ces familles . (qui ne sont donc eux pas tous sur
+#reprsents d'office car 1 id famille = plusieurs ids domaines)
 
 
 
@@ -552,7 +552,7 @@ echantillon_domains=as.matrix(echantillon[2])
 
 
 
-cleanBlankLines<- function(datatoclean) #nettoyer les ids vides renvoyés par BIOCONDUCTOR
+cleanBlankLines<- function(datatoclean) #nettoyer les ids vides renvoys par BIOCONDUCTOR
 {                                       #prend un entre un objet getBM() 
   count=1
   datacleaned=""
@@ -581,7 +581,7 @@ expectednumberofhits=""
 #calcul p-values et nbhits
 for(i in 1:length(Panther_Family_ID))
 {
-  targeted_domain = Panther_Family_ID[i] #id recherché
+  targeted_domain = Panther_Family_ID[i] #id recherch
   
   #enrichment tests
   pvals[i] <- phyper(length(which(echantillon_domains==targeted_domain)),  #nb hits de cet id dans l'echantillon
@@ -615,15 +615,15 @@ pValue_ajustee <- p.adjust(pvals, method=Padjustmethod, n=length(Univers_domains
 ##############################################################################
 
 #objectif : remplir metadatas[x] avec les id pfam correspondant aux id panther family a une position x
-#remplir de blank lines si aucun id ne mappe, afin de conserver la même dimension que echantillon_uniq_domains[x]
+#remplir de blank lines si aucun id ne mappe, afin de conserver la mme dimension que echantillon_uniq_domains[x]
 #pourquoi? l'objectif est de fusionner ces variables afin d'obtenir un tableau
 #donc besoin que chaque variable ait le meme nombre de lignes!
 
 setWinProgressBar(pb,30,
                   title="Step 7/7 -  Proteins Domains enrichment", label="30% done \t Add supplementary metadata...")
 
-add_metadata<- function(bioCdatabase) #retourne metadonnées d'une database (arg bioCdatabase) mappés sur ids panther family de l'echantillon
-{                                     #Prend en entrée un résultat de cleanBlankLines()
+add_metadata<- function(bioCdatabase) #retourne metadonnes d'une database (arg bioCdatabase) mapps sur ids panther family de l'echantillon
+{                                     #Prend en entre un rsultat de cleanBlankLines()
   metadata=""
   for(i in 1:length(Panther_Family_ID))
   {
@@ -645,42 +645,42 @@ add_metadata<- function(bioCdatabase) #retourne metadonnées d'une database (arg 
   return(metadata)
 }
 
-# Métadonnée 1 : description de la famille proteique
+# Mtadonne 1 : description de la famille proteique
 setWinProgressBar(pb,45,
                   title="Step 7/7 -  Proteins Domains enrichment", label="45% done \t Add supplementary metadata...family description")
 
 Panther_Family_Description=add_metadata('family_description')
 
 
-# Métadonnée 2 : ensembl transcript ID
+# Mtadonne 2 : ensembl transcript ID
 setWinProgressBar(pb,55,
                   title="Step 7/7 -  Proteins Domains enrichment", label="55% done \t Add supplementary metadata...Ensembl transcript ID")
 
 EnsemblTranscriptID=add_metadata('ensembl_transcript_id')
 
 
-# Métadonnée 3 : ensembl peptide ID
+# Mtadonne 3 : ensembl peptide ID
 setWinProgressBar(pb,65,
                   title="Step 7/7 -  Proteins Domains enrichment", label="65% done \t Add supplementary metadata...Ensembl peptide ID")
 
 EnsemblPeptideID=add_metadata('ensembl_peptide_id')
 
 
-# Métadonnée 4 : pfam id
+# Mtadonne 4 : pfam id
 setWinProgressBar(pb,75,
                   title="Step 7/7 -  Proteins Domains enrichment", label="75% done \t Add supplementary metadata...Pfam")
 
 PfamID=add_metadata('pfam')
 
 
-# Métadonnée 5 : pfam start
+# Mtadonne 5 : pfam start
 setWinProgressBar(pb,85,
                   title="Step 7/7 -  Proteins Domains enrichment", label="85% done \t Add supplementary metadata...Pfam S")
 
 PfamSTART=add_metadata('pfam_start')
 
 
-# Métadonnée 6 : pfam end
+# Mtadonne 6 : pfam end
 setWinProgressBar(pb,95,
                   title="Step 7/7 -  Proteins Domains enrichment", label="95% done \t Add supplementary metadata...Pfam E")
 
@@ -690,7 +690,7 @@ setWinProgressBar(pb,98,
                   title="Step 7/7 -  Proteins Domains enrichment", label="98% done \t Settings...")
 
 
-# Fusionner les metadonnées aux resultats d'enrichissement dans une seule variable de type matrix
+# Fusionner les metadonnes aux resultats d'enrichissement dans une seule variable de type matrix
 Domain_enrich_results = cbind(Panther_Family_ID,
                               Panther_Family_Description,
                               EnsemblTranscriptID,
@@ -699,7 +699,7 @@ Domain_enrich_results = cbind(Panther_Family_ID,
                               PfamSTART,
                               PfamEND)
 
-# Fusionner les metadonnées aux resultats d'ORA sur l'enrichissement dans une seule variable de type matrix
+# Fusionner les metadonnes aux resultats d'ORA sur l'enrichissement dans une seule variable de type matrix
 Domain_enrich_ORA_results = cbind(Panther_Family_ID,
                               nbhits,
                               expectednumberofhits,
@@ -748,7 +748,7 @@ winDialog(type = c("ok"), paste("Analysis finished with success.\n","Execution t
 # length(as.matrix(tst[1]))
 # > 50046
 # 
-# #Voyons parmi les 50046 entrees lesquelles entre PFAM domaines et PANTHER familles de domaines sont le + renseignées
+# #Voyons parmi les 50046 entrees lesquelles entre PFAM domaines et PANTHER familles de domaines sont le + renseignes
 # 
 # length(which(as.matrix(tst[2])!="")) #Pfam domains
 # > 36999
@@ -762,21 +762,21 @@ winDialog(type = c("ok"), paste("Analysis finished with success.\n","Execution t
 # length(which(unique(as.matrix(tst[3]))!="")) #family domains
 # >15355
 
-#--> Que ce soit en id uniques ou non, il y a plus d'ids renseignés sur PANTHER families.
+#--> Que ce soit en id uniques ou non, il y a plus d'ids renseigns sur PANTHER families.
 #On va donc utiliser ids PANTHER pour tests statistiques sur l'enrichissement.
 #NB : de plus, le test est peu puissant pour cet echantillon car sur celui-ci on a:
 # > length(unique(echantillon_domains))
 # [1] 651 #651 ids uniques
 # > length(which(echantillon_domains!=""))
-# [1] 693 #693 ids avec doublons, soit 42 ids qui se répètent, ce qui ne va pas bcp varier par rapport a distribution univers
-#--> c a dire qu'il suffira juste de 1 hits pour que le domaine soit presque signicitativement sur-représenté!!
+# [1] 693 #693 ids avec doublons, soit 42 ids qui se rptent, ce qui ne va pas bcp varier par rapport a distribution univers
+#--> c a dire qu'il suffira juste de 1 hits pour que le domaine soit presque signicitativement sur-reprsent!!
 # 
 # > max(expectednumberofhits)
 # [1] "1.1283575407879"
 # > min(expectednumberofhits)
 # [1] "0.0158923597294071"
 #
-#Mais globalement le test à du potentiel en puissance car:
+#Mais globalement le test  du potentiel en puissance car:
 # > length(Univers_uniq_domains)
 # [1] 15356
 # > length(Univers_domains)
