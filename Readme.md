@@ -11,14 +11,21 @@ WARNING : this script was developed under the context of a bioinformatic project
 
 <i class="icon-file"></i>  Path organization
 =================
+	.
+	│
+	│--bin : windows executable files
+	│
+	│--dependencies : R package dependencies list (JSON)
+	│
+	│--log : log files
+	│
+	│--example_data : experiment specific raw_data (currently --> Workflow input) 
+	│
+	│--results : results examples (one path generated per result, Day_Month_HH_MM-SS-DD_YY format)
+	│
+	│--src : R scripts
 
-    bin : windows executable files [1]
-    dependencies : R package dependencies list (JSON)
-    log : log files[2]
-    example_data : experiment specific raw_data (currently --> Workflow input) 
-    results : results examples (one path generated per result, Day_Month_HH_MM-SS-DD_YY format)
-    src : R scripts
-
+     
 
 The project 
 ==================================================================
@@ -28,8 +35,9 @@ SHINY INTERFACE OVERVIEW :
 -----------------------------
 
 Divided in 5 main sections :
-	- Load and explore raw data
-	- Vulcano plot
+
+	-Load and explore raw data
+	-Vulcano plot
 	- GO enrichment
 		* GO classification (barplot)
 		* Ability to set a threshold for go annotations level / ontologies
