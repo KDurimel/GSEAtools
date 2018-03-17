@@ -1,4 +1,4 @@
-GENIAL : GENe set enrIchment AnaLysis <img src="https://github.com/KDurimel/GSEAtools/blob/master/logo.png" height="40">
+GENIAL : Gene ontology ENrIchment AnaLysis <img src="https://github.com/KDurimel/GSEAtools/blob/master/logo.png" height="40">
 ===================
 
 Authors: Kevin Durimel & Victor Mataigne
@@ -7,7 +7,6 @@ Affiliation: [University of Rouen (France)](http://www.univ-rouen.fr/)
 
 Web application now availaible (still a work in progress) : https://genial.shinyapps.io/GenialGSEA/
 
-WARNING : this script was developed under the context of a bioinformatic project (20h) and will be not long term supported!
 
 <i class="icon-file"></i>  Path organization
 =================
@@ -29,33 +28,42 @@ WARNING : this script was developed under the context of a bioinformatic project
 
 The project geneis
 ==================================================================
-From a input dataset of our choice from the literature, we had 20 hours to implement R packages to realize all three GO,metabolic        pathways, and protein functional domains enrichment annotations, implementing robust statistical procedures. Outputs will be both charts (pie, bar plot, graphs, tracks) and texts results (tables). This workfow must be interfaced with Shiny, a R package developed by RStudio.
+From a input dataset of our choice from the literature, we had **20 hours** to implement R packages to realize all three GO,metabolic        pathways, and protein functional domains enrichment annotations, implementing robust statistical procedures. Outputs will be both charts (pie, bar plot, graphs, tracks) and texts results (tables). This workfow must be interfaced with Shiny, a R package developed by RStudio.
+**This script was developed under the context of a light bioinformatic project and will be not long term supported!**
     
-SHINY INTERFACE OVERVIEW :
+Shiny interface overview :
 -----------------------------
 
 Divided in 5 main sections :
 
-	-Load and explore raw data
-	-Vulcano plot
-	- GO enrichment
-		* GO classification (barplot)
-		* Ability to set a threshold for go annotations level / ontologies
-		* GO three browsing
-	- KEGG enrichment
-		* KEGG enrichment results overview
-		* KEGG enrichment results browsing by typing target pathway IDs on a web form
-	- Protein domains
-		* Hypergeometric test
-		* Ability to add metatada on the results :Panther_Family_ID, Panther_Family_Description,EnsemblTranscriptID, EnsemblPeptideID, PfamID, PfamSTART, PfamEND
+* Load and explore raw data
 
-SHINY INTERFACE OVERVIEW :
+* Vulcano plot
+
+* GO enrichment
+		
+		GO classification (barplot)
+		Ability to set a threshold for go annotations level / ontologies
+		GO three browsing
+		
+* KEGG enrichment
+
+		KEGG enrichment results overview
+		KEGG enrichment results browsing by typing target pathway IDs on a web form
+		
+* Protein domains
+
+		Hypergeometric test
+		Ability to add metatada on the results :
+			Panther_Family_ID Panther_Family_Description ; EnsemblTranscriptID ; EnsemblPeptideID ; PfamID ; PfamSTART ; PfamEND
+
+Shiny web application overiew :
 -----------------------------
 
-Same as the Shiny interface.
+Same as the Shiny interface. Available here : https://genial.shinyapps.io/GenialGSEA/
 
 
-STANDALONE SCRIPT :
+Standalone application :
 ---------------------
 
 Rscript GENIAL-NOShiny.R
@@ -97,7 +105,7 @@ GENIAL has been developped with R 3.3.2
 
 
 
-BE CAUTIOUS :
+Be cautious!
 ---------------------------
 WARNING 1 : This workflow needs some containerization (Conda, Packrat... )to work properly / ensure repdroducibility, which was not done under the context of this very short project. You need to install exactly the same R and package versions as cited in the "external dependencies" sections.
 Due to this, the [Web application](https://genial.shinyapps.io/GenialGSEA/) may stop working properly at any time. This project is not long term supported and any future bugs will be not fixed.
