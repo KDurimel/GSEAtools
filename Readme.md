@@ -118,7 +118,7 @@ Due to Shiny technical limitations, tasks launched in different tabs are not par
 This application works only with data formated like "human_retine.txt" example file (columns names and content).
 
 * WARNING 4: 
-A lot of APIs are used --> The better your internet connection is the faster the application runs.
+A lot of APIs are used --> The better your internet connection is, the faster the application will run.
 
 
 Example dataset obtained from :
