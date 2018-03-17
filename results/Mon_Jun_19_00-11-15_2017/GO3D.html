@@ -1,0 +1,158 @@
+var data = {
+ 'Enrichment results': {
+ 'Biological Process': {
+' toll-like receptor 3 signaling pathway ': ' 23 ',
+' toll-like receptor 4 signaling pathway ': ' 25 ',
+' MyD88-independent toll-like receptor signaling pathway ': ' 20 ',
+' toll-like receptor 2 signaling pathway ': ' 17 ',
+' MyD88-dependent toll-like receptor signaling pathway ': ' 17 ',
+' positive regulation of cysteine-type endopeptidase activity ': ' 20 ',
+' activation of protein kinase activity ': ' 42 ',
+' regulation of cysteine-type endopeptidase activity ': ' 26 ',
+' toll-like receptor 9 signaling pathway ': ' 15 ',
+' toll-like receptor 5 signaling pathway ': ' 14 ',
+' peptidyl-tyrosine modification ': ' 33 ',
+' nuclear import ': ' 29 ',
+' regulation of peptidyl-tyrosine phosphorylation ': ' 25 ',
+' toll-like receptor TLR1:TLR2 signaling pathway ': ' 14 ',
+' toll-like receptor TLR6:TLR2 signaling pathway ': ' 14 ',
+' peptidyl-tyrosine phosphorylation ': ' 32 ',
+' CD4-positive, alpha-beta T cell differentiation ': ' 12 ',
+' toll-like receptor 10 signaling pathway ': ' 13 ',
+' activation of cysteine-type endopeptidase activity ': ' 15 ',
+' leukocyte apoptotic process ': ' 15 ',
+' positive regulation of peptidyl-tyrosine phosphorylation ': ' 19 ',
+' vascular endothelial growth factor receptor signaling pathway ': ' 26 ',
+' regulation of alpha-beta T cell differentiation ': ' 9 ',
+' negative regulation of peptidyl-serine phosphorylation ': ' 6 ',
+' regulation of alpha-beta T cell proliferation ': ' 6 ',
+' tyrosine phosphorylation of STAT protein ': ' 10 ',
+' positive regulation of protein serine/threonine kinase activity ': ' 24 ',
+' regulation of protein ubiquitination ': ' 23 ',
+' positive regulation of T cell apoptotic process ': ' 5 ',
+' negative regulation of protein ubiquitination ': ' 15 ',
+' regulation of peptidyl-threonine phosphorylation ': ' 7 ',
+' regulation of CD4-positive, alpha-beta T cell activation ': ' 7 ',
+' regulation of tyrosine phosphorylation of STAT protein ': ' 9 ',
+' regulation of cGMP metabolic process ': ' 6 ',
+' regulation of cholesterol efflux ': ' 5 ',
+' positive regulation of proteasomal ubiquitin-dependent protein catabolic process ': ' 10 ',
+' signal transduction involved in mitotic G1 DNA damage checkpoint ': ' 9 ',
+' intracellular signal transduction involved in G1 DNA damage checkpoint ': ' 9 ',
+' activin receptor signaling pathway ': ' 7 ',
+' positive regulation of cGMP metabolic process ': ' 5 ',
+' endoplasmic reticulum calcium ion homeostasis ': ' 5 ',
+' positive regulation of lymphocyte apoptotic process ': ' 5 ',
+' regulation of lymphocyte apoptotic process ': ' 8 ',
+' positive regulation of protein ubiquitination ': ' 16 ',
+' regulation of thymocyte apoptotic process ': ' 4 ',
+' protein polyubiquitination ': ' 18 ',
+' platelet-derived growth factor receptor signaling pathway ': ' 7 ',
+' regulation of T cell apoptotic process ': ' 6 ',
+' tyrosine phosphorylation of Stat5 protein ': ' 5 ',
+' positive regulation of peptidyl-threonine phosphorylation ': ' 5 ',
+' glial cell apoptotic process ': ' 4 ',
+' peptidyl-threonine phosphorylation ': ' 9 ',
+' regulation of activated T cell proliferation ': ' 6 ',
+' peptidyl-threonine modification ': ' 9 ',
+' regulation of endothelial cell apoptotic process ': ' 6 ',
+' positive regulation of tyrosine phosphorylation of STAT protein ': ' 7 ',
+' lymphocyte apoptotic process ': ' 8 ',
+' cholesterol efflux ': ' 6 ',
+' thymocyte apoptotic process ': ' 4 ',
+' blood vessel endothelial cell migration ': ' 8 ',
+' endothelial cell apoptotic process ': ' 6 ',
+' ERBB signaling pathway ': ' 24 ',
+' Rho protein signal transduction ': ' 13 ',
+' macrophage apoptotic process ': ' 3 ',
+' cGMP metabolic process ': ' 6 ',
+' regulation of cGMP biosynthetic process ': ' 4 ',
+' positive regulation of Rho protein signal transduction ': ' 3 ',
+' T cell apoptotic process ': ' 6 ',
+' mesenchymal cell apoptotic process ': ' 3 ',
+' regulation of protein polyubiquitination ': ' 3 ',
+' hyaluronan metabolic process ': ' 5 ',
+ },
+ 'Cellular component': {
+ },
+ 'Molecular function': {
+ }
+ }
+},
+    points = [],
+      regionP,
+      regionVal,
+      regionI = 0,
+      countryP,
+      countryI,
+      causeP,
+      causeI,
+      region,
+      country,
+      cause
+      
+      for (region in data) {
+      if (data.hasOwnProperty(region)) {
+      regionVal = 0;
+      regionP = {
+      id: 'id_' + regionI,
+      name: region,
+      color: Highcharts.getOptions().colors[regionI]
+      };
+      countryI = 0;
+      for (country in data[region]) {
+      if (data[region].hasOwnProperty(country)) {
+      countryP = {
+      id: regionP.id + '_' + countryI,
+      name: country,
+      parent: regionP.id
+      };
+      points.push(countryP);
+      causeI = 0;
+      for (cause in data[region][country]) {
+      if (data[region][country].hasOwnProperty(cause)) {
+      causeP = {
+      id: countryP.id + '_' + causeI,
+      name: cause,
+      parent: countryP.id,
+      value: Math.round(+data[region][country][cause])
+      };
+      regionVal += causeP.value;
+      points.push(causeP);
+      causeI = causeI + 1;
+      }
+      }
+      countryI = countryI + 1;
+      }
+      }
+      regionP.value = Math.round(regionVal / countryI);
+      points.push(regionP);
+      regionI = regionI + 1;
+      }
+      }
+      Highcharts.chart('container', {
+      series: [{
+      type: 'treemap',
+      layoutAlgorithm: 'squarified',
+      allowDrillToNode: true,
+      animationLimit: 1000,
+      dataLabels: {
+      enabled: false
+      },
+      levelIsConstant: false,
+      levels: [{
+      level: 1,
+      dataLabels: {
+      enabled: true
+      },
+      borderWidth: 3
+      }],
+      data: points
+      }],
+      subtitle: {
+      text: 'Click points to drill down. Source: <a href="http://apps.who.int/gho/data/node.main.12?lang=en">WHO</a>.'
+      },
+      title: {
+      text: 'GSEA Go-terms global view'
+      }
+      });
