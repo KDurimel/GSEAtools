@@ -1,4 +1,4 @@
-GENIAL : Gene ontology ENrIchment AnaLysis <img src="https://github.com/KDurimel/GSEAtools/blob/master/logo.png" height="40">
+GENIAL: Gene ontology ENrIchment AnaLysis <img src="https://github.com/KDurimel/GSEAtools/blob/master/logo.png" height="40">
 ===================
 
 Authors: Kevin Durimel & Victor Mataigne
@@ -31,7 +31,7 @@ The project geneis
 From a input dataset of our choice from the literature, we had **20 hours** to implement R packages to realize all three GO,metabolic        pathways, and protein functional domains enrichment annotations, implementing robust statistical procedures. Outputs will be both charts (pie, bar plot, graphs, tracks) and texts results (tables). This workfow must be interfaced with Shiny, a R package developed by RStudio.
 **This script was developed under the context of a light bioinformatic project and will be not long term supported!**
     
-Shiny interface overview :
+Shiny interface overview
 -----------------------------
 
 Divided in 5 main sections :
@@ -57,13 +57,13 @@ Divided in 5 main sections :
 		Ability to add metatada on the results :
 			Panther_Family_ID Panther_Family_Description ; EnsemblTranscriptID ; EnsemblPeptideID ; PfamID ; PfamSTART ; PfamEND
 
-Shiny web application overiew :
+Shiny web application overiew
 -----------------------------
 
 Same as the Shiny interface. Available here : https://genial.shinyapps.io/GenialGSEA/
 
 
-Standalone application :
+Standalone application
 ---------------------
 
 Rscript GENIAL-NOShiny.R
@@ -107,14 +107,18 @@ GENIAL has been developped with R 3.3.2
 
 Be cautious!
 ---------------------------
-WARNING 1 : This workflow needs some containerization (Conda, Packrat... )to work properly / ensure repdroducibility, which was not done under the context of this very short project. You need to install exactly the same R and package versions as cited in the "external dependencies" sections.
+* WARNING 1: 
+This workflow needs some containerization (Conda, Packrat... ) to work properly / ensure repdroducibility, which was not done under the context of this very short project. You need to install exactly the same R and package versions as cited in the "external dependencies" sections.
 Due to this, the [Web application](https://genial.shinyapps.io/GenialGSEA/) may stop working properly at any time. This project is not long term supported and any future bugs will be not fixed.
 
-WARNING 2 : Due to Shiny technical limitations, tasks launched in different tabs are not parallelised or processed asynchronously.
+* WARNING 2: 
+Due to Shiny technical limitations, tasks launched in different tabs are not parallelised or processed asynchronously.
 
-WARNING 3 : This application works only with data formated like "human_retine.txt" example file (columns names and content).
+* WARNING 3: 
+This application works only with data formated like "human_retine.txt" example file (columns names and content).
 
-WARNING 4 : A lot of APIs are used --> The better your internet connection is the faster the application runs.
+* WARNING 4: 
+A lot of APIs are used --> The better your internet connection is the faster the application runs.
 
 
 Example dataset obtained from :
