@@ -1,7 +1,7 @@
-GENIAL : GENe set enrIchment AnaLysis
+GENIAL : GENe set enrIchment AnaLysis <img src="https://github.com/KDurimel/GSEAtools/blob/master/logo.png" height="40">
 ===================
 
-Authors: Kevin Durimel & Victor Mataigne - 2017
+Authors: Kevin Durimel & Victor Mataigne
 
 Affiliation: [University of Rouen (France)](http://www.univ-rouen.fr/)
 
@@ -20,9 +20,8 @@ WARNING : this script was developed under the context of a bioinformatic project
     src : R scripts
 
 
-DEVELOPMENT OF A GENE SET ENRICHMENT ANALYSIS (GSEA) WORKFLOW
+The project 
 ==================================================================
-The project :
 From a input dataset of our choice from the literature, we had to implement R packages to realize all three GO,metabolic        pathways, and protein functional domains enrichment annotations, implementing robust statistical procedures. Outputs will be both charts (pie, bar plot, graphs, tracks) and texts results (tables). This workfow must be interfaced with Shiny, a R package developed by RStudio
     
 SHINY INTERFACE OVERVIEW :
@@ -41,7 +40,12 @@ Divided in 5 main sections :
 	- Protein domains
 		* Hypergeometric test
 		* Ability to add metatada on the results :Panther_Family_ID, Panther_Family_Description,EnsemblTranscriptID, EnsemblPeptideID, PfamID, PfamSTART, PfamEND
-	
+
+SHINY INTERFACE OVERVIEW :
+-----------------------------
+
+Same as the Shiny interface.
+
 
 STANDALONE SCRIPT :
 ---------------------
@@ -52,7 +56,7 @@ This is the GUI interfaced R script (i.e Non-Shiny), containing more features th
 
 ## Usage (Linux/Mac OS X)
 
-If it's necessary, set up the scripts permissions inside the src path :
+If necessary, set up the scripts permissions inside the src path :
 
 	chmod +x src/*
 
@@ -108,6 +112,7 @@ Example dataset obtained from :
 	https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4305319/
 
 ***********************************************************************************************************
-    Kevin Durimel, Victor Mataigne - M2.1 BIM - University of Rouen, 2017.
+Kevin Durimel, Victor Mataigne - M2.1 BIM - University of Rouen, 2017.
+
 	Standalone script - Web app : Kevin Durimel
 	Shiny interfacing : Victor Mataigne
