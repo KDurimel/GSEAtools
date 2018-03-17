@@ -27,9 +27,9 @@ WARNING : this script was developed under the context of a bioinformatic project
 
      
 
-The project 
+The project geneis
 ==================================================================
-From a input dataset of our choice from the literature, we had to implement R packages to realize all three GO,metabolic        pathways, and protein functional domains enrichment annotations, implementing robust statistical procedures. Outputs will be both charts (pie, bar plot, graphs, tracks) and texts results (tables). This workfow must be interfaced with Shiny, a R package developed by RStudio
+From a input dataset of our choice from the literature, we had 20 hours to implement R packages to realize all three GO,metabolic        pathways, and protein functional domains enrichment annotations, implementing robust statistical procedures. Outputs will be both charts (pie, bar plot, graphs, tracks) and texts results (tables). This workfow must be interfaced with Shiny, a R package developed by RStudio.
     
 SHINY INTERFACE OVERVIEW :
 -----------------------------
