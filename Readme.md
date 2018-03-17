@@ -66,21 +66,24 @@ Same as the Shiny interface. Available here : https://genial.shinyapps.io/Genial
 Standalone application
 ---------------------
 
-Rscript GENIAL-NOShiny.R
-
 This is the GUI interfaced R script (i.e Non-Shiny), containing more features that the interfaced one.
 
 ## Usage (Linux/Mac OS X)
 
-If necessary, set up the scripts permissions inside the src path :
+From scratch :
+
+	Rscript GENIAL-NOShiny.R
+
+OR, set up the scripts permissions inside the src path :
 
 	chmod +x src/*
 
-Add the scripts to your bashrc (/home/username/.bashrc) :
+Then, add the scripts to your bashrc (/home/username/.bashrc) :
 
 	export PATH=$PATH:src/
+	alias Genial='Rscript GENIAL-NOShiny.R'
 	
-Then you can run it as a shell command :
+Then, you can run it as a shell command :
 
 	GENIAL-NOShiny.R
 
