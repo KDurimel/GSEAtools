@@ -90,7 +90,7 @@ Dependencies
 
 GENIAL has been developped with R 3.3.2
 
-## External dependencies
+## External packages
 
 * [shiny](https://shiny.rstudio.com/) - Version 1.0.1
 * [shinythemes](https://github.com/rstudio/shinythemes) - Version 1.1.1
