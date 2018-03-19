@@ -1,28 +1,25 @@
 #################################### WORKFLOW INITIALISATION : START ####################################
 
-# library(rChoiceDialogs)
-# wd=file.choose()
-# wd=gsub("\\", "/", wd, fixed = TRUE)
-# wd=gsub("é", "", wd, fixed = TRUE)
-# wd=gsub("GENIAL-Noshiny310317.R", "", wd, fixed = TRUE)
-# setwd(wd)
+# Remember : this is a draft script --> Best practices level ~ 0%
+
 #Set Working directory to source file location  
 #this.dir <- dirname(parent.frame(2)$ofile)
 #setwd(this.dir)
-#filename = "GENIAL-Noshiny310317.R"
-#filepath = file.choose()  # browse and select your_file.R in the window
-#dir = substr(filepath, 1, nchar(filepath)-nchar(filename))
-#setwd(dir)
 
-#source("premierScriptKev.R", chdir = TRUE)
+####### External dependencies
+library(ggplot2)
+library(clusterProfiler) 
+library(GO.db) 
+library(AnnotationDbi) 
+library(org.Hs.eg.db) 
+library(biomaRt)
+library(shiny)
+library(pathview) 
+library(MASS)
 
-####### First Lib requierements
-library(ggplot2) # v2.2.1
-###############################
+start.time <- Sys.time() #Init basic counter
 
-start.time <- Sys.time() #chrono
-
-#Raise number of printable strings in order to be able to capture large outputs
+#Raise number of printable strings in order to be able to catch large outputs
 options(max.print=99999)
 
 
@@ -49,23 +46,11 @@ reportfilename=logfilename=paste("../results/",date,"/Genial_",date,".txt",sep="
 #Initialize report file
 write(date,file=reportfilename,append=FALSE)
 
-
-
-            ################################################################
-######################           SHINY INITIALISATION               ######################
-            ################################################################
-
-
-# Shiny Server initialisation
-
-   #Shiny Victor#
-
 #Progress bar
 pb<-winProgressBar(title="Step 1/7 - Initialising workflow", label="0% done", min=0, max=100, initial=0)
 getWinProgressBar(pb)
 
-## Set Workflow parameters : FROM SHINY STDINPUT ##
-
+## Set Workflow parameters
 inputfile=file.choose()# Fichier d'entree
 Log2FC_column = 3 # Colonne du log2FC dans fichier d'entree
 Log2FC_cutoff = 2 # Cutoff du log2FC
@@ -126,29 +111,16 @@ close(pb)
 
 pb<-winProgressBar(title="Step 3/7 - GO enrichment", label="0% done \t Loading required libraries",
                    min=0, max=100, initial=0)
+
 getWinProgressBar(pb)
-
-
-
-################## LOAD Second lib Requirements ################
-library(clusterProfiler) # v3.2.11
-library(GO.db) # v2.9
-library(AnnotationDbi) # v 1.34.4
-library(org.Hs.eg.db) # v3.4
-library(shiny) # v 1.0.0
-################################################################
 
 setWinProgressBar(pb,10,
                   title="Step 3/7 - GO enrichment",label="10% done \t Generating vulcano plots ...")
 
 #Extract all ENSEMBL ids from input : p-values are already filtered
-#genes <- data$Ensembl_Gene_ID[abs(data$log2FC_DeSeq)>Log2FC_cutoff] filtrer log2FC
-#genes <- as.list(data[Idscolumn])
 setWinProgressBar(pb,15,
                   title="Step 3/7 - GO enrichment",label="15% done \t Mapping dataset ...")
 genes <- data$Ensembl_Gene_ID
-#genes <- as.character(genes)
-
 
 #Human ENTREZID ids retrieving from ENSEMBL ids : use bitr (biological id translator)
 setWinProgressBar(pb,20,
@@ -158,12 +130,6 @@ EntrezIDs = bitr(genes, fromType= IdsType , toType="ENTREZID", OrgDb="org.Hs.eg.
 ## Retrieve GO-TERMS from ENTREZID ##
 setWinProgressBar(pb,25,
                   title="Step 3/7 - GO enrichment",label="25% done \t Retrieving GO-terms ...")
-#BP Ontology
-#BP <- groupGO(gene = EntrezIDs, 'org.Hs.eg.db', ont = "BP", level = 7)
-#CC Ontology
-#CC <- groupGO(gene = EntrezIDs, 'org.Hs.eg.db', ont = "CC", level = 7) 
-#MF Ontology
-#MF <- groupGO(gene = EntrezIDs, 'org.Hs.eg.db', ont = "MF", level = 7) 
 
 setWinProgressBar(pb,100,
                   title="Step 3/7 - GO enrichment",label="100% done \t")
@@ -177,10 +143,6 @@ pb<-winProgressBar(title="Step 4/7 - GO ORA Analysis", label="0% done \t BP Enri
                    min=0, max=100, initial=0)
 getWinProgressBar(pb)
 
-#genes<-data$Ensembl_Gene_ID[abs(data$log2FC_DeSeq)>2]
-#genes <- as.character(genes)
-#, qvalueCutoff=0.5
-#pvalue adjust : si 0.01 --> correspond a que j'accepte jusqu'a 1% de faux positifs dans ma liste
 
 ###################################
 ### ORA analysis
@@ -210,14 +172,13 @@ MFenrich <- enrichGO(EntrezIDs , OrgDb = "org.Hs.eg.db", ont = "MF",
 setWinProgressBar(pb,85,
                   title="Step 4/7 - GO ORA Analysis",label="85% done \t Trimming terms ...")
 
-## Drop too mainstream terms ##
+## Drop too generic terms according some  thresholds ##
 
-  # future variables without dropped terms 
-BPenrichDrop<-BPenrich 
-CCenrichDrop<-CCenrich
-MFenrichDrop<-MFenrich
 
-###### Drop enriched terms between level min and max thresholds : start ######
+BPenrichDrop<-BPenrich # without dropped (too generic) terms 
+CCenrichDrop<-CCenrich # without dropped (too generic) terms 
+MFenrichDrop<-MFenrich # without dropped (too generic) terms 
+
 
 #Drop terms below left threshold
 for(i in 1:MinGOlevel)
@@ -233,40 +194,12 @@ for(i in MaxGOlevel:14)
   CCenrichDrop <- dropGO(CCenrichDrop,level=i)
   MFenrichDrop <- dropGO(MFenrichDrop,level=i)
 }
-###### Drop enriched terms between level min and max thresholds : end ######
 
 setWinProgressBar(pb,95,
                   title="Step 4/7 - GO ORA Analysis",label="95% done \t save results in tabulated file")
 
 
-################################################
-### Save trimmed ORA results in tabulated file
-################################################
-#BP
-#capture.output(
-#   {
-#     summary(BPenrichDrop)[2:9]
-#   },file=(paste("../results/",date,"/BPresults.txt",sep="")))
-# #CC
-# capture.output(
-#   {
-#     summary(CCenrichDrop)[2:9]
-#   },file=(paste("../results/",date,"/CCresults.txt",sep="")))
-# #MF
-# capture.output(
-#   {
-#     summary(MFenrichDrop)[2:9]
-#   },file=(paste("../results/",date,"/MFresults.txt",sep="")))
-
-
-
-#VISUALISER LES RESULTATS D'ENRICHISSEMENT DE LA VARIABLE
-
-  #View(summary(BPenrichDrop)) <---INTERFACER DANS SHINY!!!
-
-
-
-#SORTIR LES RESULTATS D'ENRICHISSEMENT DANS UN FICHIER TABULE
+#Save results in a TSV file
 
 header=paste("GO:id","description","Ontology","GeneRatio","BackgroundRatio","Pvalue","Adjusted_Pvalue","Qvalue","Hits","GeneIds",sep = "\t")
 write(header,file=paste("../results/",date,"/GOresults.tsv",sep=""),append=FALSE) 
@@ -459,10 +392,9 @@ setWinProgressBar(pb,95,
   MFcoeffs <- log(1/MFcoeffs) #convertir p-value en coefficient exploitable dans highcharts
   
   ##highcharts##
-  #generer code higchart
   for(i in 1:length(MFdescriptions))
   {
-    #generer code highchart pour mfdescr
+    #todo
   }
   
   #Close progesss bar
@@ -478,9 +410,7 @@ setWinProgressBar(pb,95,
 pb<-winProgressBar(title="Step 6/7 -  KEGG enrichment", label="0% done \t Loading required libraries", min=0, max=100, initial=0)
 getWinProgressBar(pb)
   
-library(pathview) #Pour dessiner les pathways sur-reprsents
-  
-library(MASS) #Contient methode write.matrix pour ecrire variables qui sont au format matix ou data.frame sans parser..
+
 
 setWinProgressBar(pb,15,
                   title="Step 6/7 -  KEGG enrichment", label="15% done \t EnrichKEGG...")
@@ -490,7 +420,6 @@ keggs=enrichKEGG(EntrezIDs ,pAdjustMethod="fdr", pvalueCutoff=pvaluecutoff, qval
 setWinProgressBar(pb,50,
                   title="Step 6/7 -  KEGG enrichment", label="50% done \t Grapical representation")
 
-#viewKegg=pathview(gene.data = EntrezIDs, pathway.id = as.matrix(summary(keggs)[1])[1:TopKEGG],species = "hsa", limit =TopKEGG)
 
 setWinProgressBar(pb,99,
                   title="Step 6/7 -  KEGG enrichment", label="95% done \t Write results")
@@ -508,16 +437,8 @@ pb<-winProgressBar(title="Step 7/7 -  Proteins Domains enrichment", label="0% do
 getWinProgressBar(pb)
 
 
-library(biomaRt)
-
-##INFO : test stat sur les familles proteiques, ensuite recoupement de l'information (ids retrieving)
-#permet de retrouver les domaines protiques relis  ces familles . (qui ne sont donc eux pas tous sur
-#reprsents d'office car 1 id famille = plusieurs ids domaines)
-
-
-
 ##############################################################################
-### Creation datasets echantillon et univers utiles pour test stat
+### Generate sample and universe datasets before hypergeometric test
 ##############################################################################
 
 #Set organism
@@ -593,10 +514,6 @@ for(i in 1:length(Panther_Family_ID))
   expectednumberofhits[i]=(((length(which(Univers_domains==targeted_domain)))/(length(Univers_domains)))*length(echantillon_domains))
 }
 
-#> length(as.matrix(echantillon[1]))
-#[1] 1278
-#> length(as.matrix(univers[1]))
-#[1] 50046
 
 ##############################################################################
 ### TEST STATISTIQUE : correction des p-values
@@ -605,19 +522,13 @@ for(i in 1:length(Panther_Family_ID))
 pValue_ajustee <- p.adjust(pvals, method=Padjustmethod, n=length(Univers_domains))  # valeur du n a verifier
 
 
-#echantillon_uniq_ensembl_ids #733 ids ensembl
-
-#Panther_Family_ID #650 ids domains
-
-
 ##############################################################################
 ### AJOUT DE METADONNES AU TEST STATS pour generation fichier de resultats
 ##############################################################################
 
 #objectif : remplir metadatas[x] avec les id pfam correspondant aux id panther family a une position x
 #remplir de blank lines si aucun id ne mappe, afin de conserver la mme dimension que echantillon_uniq_domains[x]
-#pourquoi? l'objectif est de fusionner ces variables afin d'obtenir un tableau
-#donc besoin que chaque variable ait le meme nombre de lignes!
+#pourquoi? l'objectif est de fusionner ces variables afin d'obtenir un tableau 
 
 setWinProgressBar(pb,30,
                   title="Step 7/7 -  Proteins Domains enrichment", label="30% done \t Add supplementary metadata...")
@@ -635,8 +546,7 @@ add_metadata<- function(bioCdatabase) #retourne metadonnes d'une database (arg b
                         values = Panther_Family_ID[i],
                         mart = ensembl) 
     }
-    #if domain id is blank (bug happened somewhere) : add blank line to metadata[i]
-    #ce else n'est normalement plus utile depuis l'implementation de la fonction cleanBlankLines qui nettoie les ids vides
+    #if domain id is blank (bug happened somewhere) : add blank line to metadata[i] : useless since cleanblanklines impl.
     else
     {
       metadata[i]="-"
@@ -645,42 +555,42 @@ add_metadata<- function(bioCdatabase) #retourne metadonnes d'une database (arg b
   return(metadata)
 }
 
-# Mtadonne 1 : description de la famille proteique
+# Metadonnee 1 : description de la famille proteique
 setWinProgressBar(pb,45,
                   title="Step 7/7 -  Proteins Domains enrichment", label="45% done \t Add supplementary metadata...family description")
 
 Panther_Family_Description=add_metadata('family_description')
 
 
-# Mtadonne 2 : ensembl transcript ID
+# Metadonnee 2 : ensembl transcript ID
 setWinProgressBar(pb,55,
                   title="Step 7/7 -  Proteins Domains enrichment", label="55% done \t Add supplementary metadata...Ensembl transcript ID")
 
 EnsemblTranscriptID=add_metadata('ensembl_transcript_id')
 
 
-# Mtadonne 3 : ensembl peptide ID
+# Metadonnee 3 : ensembl peptide ID
 setWinProgressBar(pb,65,
                   title="Step 7/7 -  Proteins Domains enrichment", label="65% done \t Add supplementary metadata...Ensembl peptide ID")
 
 EnsemblPeptideID=add_metadata('ensembl_peptide_id')
 
 
-# Mtadonne 4 : pfam id
+# Metadonnee 4 : pfam id
 setWinProgressBar(pb,75,
                   title="Step 7/7 -  Proteins Domains enrichment", label="75% done \t Add supplementary metadata...Pfam")
 
 PfamID=add_metadata('pfam')
 
 
-# Mtadonne 5 : pfam start
+# Metadonnee 5 : pfam start
 setWinProgressBar(pb,85,
                   title="Step 7/7 -  Proteins Domains enrichment", label="85% done \t Add supplementary metadata...Pfam S")
 
 PfamSTART=add_metadata('pfam_start')
 
 
-# Mtadonne 6 : pfam end
+# Metadonnee 6 : pfam end
 setWinProgressBar(pb,95,
                   title="Step 7/7 -  Proteins Domains enrichment", label="95% done \t Add supplementary metadata...Pfam E")
 
@@ -690,7 +600,7 @@ setWinProgressBar(pb,98,
                   title="Step 7/7 -  Proteins Domains enrichment", label="98% done \t Settings...")
 
 
-# Fusionner les metadonnes aux resultats d'enrichissement dans une seule variable de type matrix
+# Merge results and metatadas inside a Matrix
 Domain_enrich_results = cbind(Panther_Family_ID,
                               Panther_Family_Description,
                               EnsemblTranscriptID,
@@ -699,7 +609,7 @@ Domain_enrich_results = cbind(Panther_Family_ID,
                               PfamSTART,
                               PfamEND)
 
-# Fusionner les metadonnes aux resultats d'ORA sur l'enrichissement dans une seule variable de type matrix
+# Merge ORA results and metatadas inside a Matrix
 Domain_enrich_ORA_results = cbind(Panther_Family_ID,
                               nbhits,
                               expectednumberofhits,
@@ -712,10 +622,10 @@ Domain_enrich_ORA_results = cbind(Panther_Family_ID,
                               PfamEND)
 
 
-# flag p-value > 0.05
+# flag p-value > pvaluecutoff
 flags=which(as.numeric(Domain_enrich_ORA_results[,4]) > pvaluecutoff) 
 
-# new variable without lines with p-value > 0.05 
+# new variable without lines with p-value > pvaluecutoff
 Domain_enrich_ORA_results_clean=as.matrix(Domain_enrich_ORA_results)[-flags,] 
 
 setWinProgressBar(pb,99,
@@ -732,52 +642,3 @@ end.time <- Sys.time()
 time.taken <- end.time - start.time
 
 winDialog(type = c("ok"), paste("Analysis finished with success.\n","Execution time : ",time.taken,sep=""))
-
-####################################### GSEA-PROTFAM : END  ###########################################
-#=====================================================================================================#
-#=====================================================================================================#
-#####################################      INFOS UTILES       #########################################
-
-# ####QUEL ID CHOISIR POUR L'ENRICHISSEMENT?###
-# 
-# #Telechargeons l'univers EN PFAM ids et en familles proteiques IDs (panther)
-# 
-# univers=getBM(attributes=c('ensembl_gene_id','pfam','family'), mart = ensembl) 
-# 
-# #Voyons la taille de l'univers
-# length(as.matrix(tst[1]))
-# > 50046
-# 
-# #Voyons parmi les 50046 entrees lesquelles entre PFAM domaines et PANTHER familles de domaines sont le + renseignes
-# 
-# length(which(as.matrix(tst[2])!="")) #Pfam domains
-# > 36999
-# length(which(as.matrix(tst[3])!="")) #family domains
-# >41725
-# 
-# #Pareil mais en IDs uniques
-# 
-# length(which(unique(as.matrix(tst[2]))!="")) #pfam domains
-# >6079
-# length(which(unique(as.matrix(tst[3]))!="")) #family domains
-# >15355
-
-#--> Que ce soit en id uniques ou non, il y a plus d'ids renseigns sur PANTHER families.
-#On va donc utiliser ids PANTHER pour tests statistiques sur l'enrichissement.
-#NB : de plus, le test est peu puissant pour cet echantillon car sur celui-ci on a:
-# > length(unique(echantillon_domains))
-# [1] 651 #651 ids uniques
-# > length(which(echantillon_domains!=""))
-# [1] 693 #693 ids avec doublons, soit 42 ids qui se rptent, ce qui ne va pas bcp varier par rapport a distribution univers
-#--> c a dire qu'il suffira juste de 1 hits pour que le domaine soit presque signicitativement sur-reprsent!!
-# 
-# > max(expectednumberofhits)
-# [1] "1.1283575407879"
-# > min(expectednumberofhits)
-# [1] "0.0158923597294071"
-#
-#Mais globalement le test  du potentiel en puissance car:
-# > length(Univers_uniq_domains)
-# [1] 15356
-# > length(Univers_domains)
-# [1] 80416
