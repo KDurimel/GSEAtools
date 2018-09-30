@@ -26,7 +26,7 @@ Web application now availaible (still a work in progress) : https://genial.shiny
 
      
 
-The project geneis
+The project genesis
 ==================================================================
 From a input dataset of our choice from the literature, we had **20 hours** to implement R packages to realize all three GO,metabolic        pathways, and protein functional domains enrichment annotations, implementing robust statistical procedures. Outputs will be both charts (pie, bar plot, graphs, tracks) and texts results (tables). This workfow must be interfaced with Shiny, a R package developed by RStudio.
 **This script was developed under the context of a light bioinformatic project and will be not long term supported!**
